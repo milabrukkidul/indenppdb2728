@@ -37,7 +37,11 @@ Aplikasi Penerimaan Peserta Didik Baru (PPDB) berbasis **Google Apps Script (GAS
    - Tombol **"KIRIM PENDAFTARAN"** otomatis terkunci (disabled) ketika kuota penuh.
 6. **Otomatisasi Database Spreadsheet**:
    - Script `setupDatabase()` membuat dan memformat tab **`DATA_PENDAFTARAN`**, **`SETTINGS`**, dan **`KUOTA`** secara otomatis lengkap dengan formula & sampel data.
-7. **Bukti Pendaftaran & Integrasi WhatsApp**:
+7. **Hitungan Mundur Hari Puncak PPDB (WIB)**:
+   - Card **Countdown Keren** bertema *Neon Tosca Glassmorphism* dengan kotak waktu animasi (Hari, Jam, Menit, Detik).
+   - Disesuaikan khusus untuk **Waktu Indonesia Barat (WIB / UTC+7)**.
+   - Pengaturan `WAKTU_HARI_PUNCAK` berada di tab **`SETTINGS`** tepat di bawah `API_URL`, serta dapat diubah langsung dari Panel Admin Web App.
+8. **Bukti Pendaftaran & Integrasi WhatsApp**:
    - Menampilkan modal Bukti Pendaftaran (*Receipt Card*) dengan Nomor Pendaftaran unik (contoh: `REG-2027-001`) dan tombol konfirmasi otomatis ke WhatsApp Admin.
 
 ---

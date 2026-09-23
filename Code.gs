@@ -49,6 +49,12 @@ function doGet(e) {
     return makeOutput(result);
   }
 
+  // Handle saveWaktuHariPendaftaran / saveWaktuHariPuncak via GET
+  if (e && e.parameter && (e.parameter.action === 'saveWaktuHariPendaftaran' || e.parameter.action === 'saveWaktuHariPuncak')) {
+    var peakResult = saveWaktuHariPendaftaran(e.parameter.pin || "", e.parameter.targetTime || "");
+    return makeOutput(peakResult);
+  }
+
   // Handle verifyPin via GET
   if (e && e.parameter && e.parameter.action === 'verifyPin') {
     var pinResult = verifyAdminPin(e.parameter.pin || "");
@@ -192,7 +198,9 @@ function getAppData() {
       logoUrl: settingsMap["LOGO_URL"] || "https://cdn-icons-png.flaticon.com/512/2997/2997322.png",
       waAdmin: settingsMap["WA_ADMIN"] || "6281234567890",
       pesanSukses: settingsMap["PESAN_SUKSES"] || "Terima kasih! Pendaftaran Anda telah berhasil disimpan.",
-      apiUrl: settingsMap["API_URL"] || ""
+      apiUrl: settingsMap["API_URL"] || "",
+      waktuHariPendaftaran: settingsMap["WAKTU_HARI_PENDAFTARAN"] || settingsMap["WAKTU_HARI_PUNCAK"] || "2026-10-03 00:00:00",
+      waktuHariPuncak: settingsMap["WAKTU_HARI_PENDAFTARAN"] || settingsMap["WAKTU_HARI_PUNCAK"] || "2026-10-03 00:00:00"
     },
     kuota: kuotaMap
   };
@@ -204,6 +212,22 @@ function getAppData() {
 function processSubmission(data) {
   if (!data) {
     return { success: false, message: "Data tidak valid atau kosong." };
+  }
+
+  // Server-Side Date Lock Verification for Hari Pendaftaran
+  var appData = getAppData();
+  var targetStr = appData.settings.waktuHariPendaftaran || "2026-10-03 00:00:00";
+  var isoStr = String(targetStr).trim().replace(' ', 'T');
+  if (!isoStr.includes('+') && !isoStr.includes('Z') && !isoStr.includes('-')) {
+    isoStr += '+07:00';
+  }
+  var targetMs = new Date(isoStr).getTime();
+  var nowMs = new Date().getTime();
+  if (!isNaN(targetMs) && nowMs < targetMs) {
+    return {
+      success: false,
+      message: "Mohon maaf, pendaftaran belum dibuka! Pengisian formulir baru dapat dilakukan pada tanggal 03 OKTOBER 2026 pukul 00.00 WIB."
+    };
   }
 
   // Validate required fields
@@ -406,14 +430,15 @@ function setupDatabase() {
   var settingsRows = [
     ["JUDUL_WEB", "PPDB ONLINE TERPADU", "Judul Utama Web Header"],
     ["SUB_JUDUL_WEB", "Penerimaan Peserta Didik Baru", "Sub Judul Header Web"],
-    ["NAMA_SEKOLAH", "TK / RA AL-IKHLAS", "Nama Lembaga / Sekolah"],
-    ["LOGO_URL", "https://cdn-icons-png.flaticon.com/512/2997/2997322.png", "URL Gambar Logo Header Web"],
-    ["WA_ADMIN", "6281234567890", "Nomor WhatsApp Admin (Format 62...)"],
+    ["NAMA_SEKOLAH", "MI NURUL ISLAM LABRUK KIDUL", "Nama Lembaga / Sekolah"],
+    ["LOGO_URL", "https://i.ibb.co.com/B2KQmpM1/logoMI-R.png", "URL Gambar Logo Header Web"],
+    ["WA_ADMIN", "6285746677738", "Nomor WhatsApp Admin (Format 62...)"],
     ["PESAN_SUKSES", "Terima kasih! Pendaftaran calon siswa baru berhasil tersimpan di sistem.", "Pesan setelah pendaftaran berhasil"],
     ["KUOTA_DEFAULT", "112", "Jumlah Kuota Maksimal Default Siswa Per Tahun"],
     ["TAHUN_PELAJARAN_UTAMA", "2027/2028", "Tahun Pelajaran Utama Aktif"],
     ["PIN_ADMIN", "1234", "PIN Akses Mode Admin (Default: 1234)"],
-    ["API_URL", "https://script.google.com/macros/s/AKfycbzG2ZvYAO0t0HbAO5w_ujh0bnxcqhHX7R7szXV5iuFqM-VktwNnt0dN0n5gcbxWgUh-/exec", "URL Web App GAS (diisi otomatis setelah deploy, atau paste manual)"]
+    ["API_URL", "https://script.google.com/macros/s/AKfycbzG2ZvYAO0t0HbAO5w_ujh0bnxcqhHX7R7szXV5iuFqM-VktwNnt0dN0n5gcbxWgUh-/exec", "URL Web App GAS (diisi otomatis setelah deploy, atau paste manual)"],
+    ["WAKTU_HARI_PENDAFTARAN", "2026-10-03 00:00:00", "Waktu Hari Pendaftaran PPDB (WIB / UTC+7). Format: YYYY-MM-DD HH:mm:ss"]
   ];
 
   sheetSettings.getRange(1, 1, 1, settingsHeaders.length)
@@ -724,3 +749,68 @@ function autoSaveDeployedUrl() {
   }
   return null;
 }
+
+/**
+ * Simpan Waktu Hari Pendaftaran ke sheet SETTINGS (dibawah API_URL)
+ */
+function saveWaktuHariPendaftaran(pin, targetTime) {
+  var auth = verifyAdminPin(pin);
+  if (!auth.success) return auth;
+
+  if (!targetTime || String(targetTime).trim() === "") {
+    return { success: false, message: "Waktu Hari Pendaftaran tidak boleh kosong." };
+  }
+
+  var val = String(targetTime).trim();
+  var ss = getSpreadsheet();
+  var sheetSettings = ss.getSheetByName(SHEET_SETTINGS);
+  if (!sheetSettings) return { success: false, message: "Sheet SETTINGS tidak ditemukan." };
+
+  var values = sheetSettings.getDataRange().getValues();
+  var found = false;
+
+  for (var i = 1; i < values.length; i++) {
+    var key = String(values[i][0]).trim();
+    if (key === "WAKTU_HARI_PENDAFTARAN" || key === "WAKTU_HARI_PUNCAK") {
+      sheetSettings.getRange(i + 1, 2).setValue(val);
+      found = true;
+    }
+  }
+
+  if (!found) {
+    // Cari baris API_URL untuk menyisipkan tepat di bawahnya
+    var apiUrlRowIndex = -1;
+    for (var j = 1; j < values.length; j++) {
+      if (String(values[j][0]).trim() === "API_URL") {
+        apiUrlRowIndex = j + 1;
+        break;
+      }
+    }
+    if (apiUrlRowIndex > 0 && apiUrlRowIndex < sheetSettings.getLastRow()) {
+      sheetSettings.insertRowAfter(apiUrlRowIndex);
+      sheetSettings.getRange(apiUrlRowIndex + 1, 1, 1, 3).setValues([
+        ["WAKTU_HARI_PENDAFTARAN", val, "Waktu Hari Pendaftaran PPDB (WIB / UTC+7). Format: YYYY-MM-DD HH:mm:ss"]
+      ]);
+    } else {
+      var lastRow = sheetSettings.getLastRow() + 1;
+      sheetSettings.getRange(lastRow, 1, 1, 3).setValues([
+        ["WAKTU_HARI_PENDAFTARAN", val, "Waktu Hari Pendaftaran PPDB (WIB / UTC+7). Format: YYYY-MM-DD HH:mm:ss"]
+      ]);
+    }
+  }
+
+  SpreadsheetApp.flush();
+
+  return {
+    success: true,
+    message: "Waktu Hari Pendaftaran (WIB) berhasil disimpan!",
+    waktuHariPendaftaran: val,
+    waktuHariPuncak: val
+  };
+}
+
+// Alias untuk kompatibilitas
+function saveWaktuHariPuncak(pin, targetTime) {
+  return saveWaktuHariPendaftaran(pin, targetTime);
+}
+

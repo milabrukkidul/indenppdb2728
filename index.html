@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -1452,6 +1452,261 @@
     .btn-ob-setup:hover {
       background: rgba(255, 255, 255, 0.35);
     }
+
+    /* ==========================================================================
+       COUNTDOWN TIMER CARD (HARI PUNCAK PPDB - WIB)
+       ========================================================================== */
+    .countdown-card {
+      background: linear-gradient(135deg, rgba(5, 102, 141, 0.92) 0%, rgba(2, 128, 144, 0.95) 50%, rgba(0, 168, 150, 0.92) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 201, 167, 0.45);
+      border-radius: var(--radius-xl);
+      box-shadow: 0 16px 40px rgba(0, 75, 80, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      padding: 24px 28px;
+      color: #ffffff;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 24px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .countdown-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(0, 201, 167, 0.25) 0%, transparent 70%);
+      pointer-events: none;
+      animation: pulseGlow 10s infinite alternate ease-in-out;
+    }
+
+    .countdown-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .countdown-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0, 201, 167, 0.2);
+      border: 1px solid rgba(0, 201, 167, 0.4);
+      color: #00C9A7;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      padding: 4px 12px;
+      border-radius: 30px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .pulse-live-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #00C9A7;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #00C9A7;
+      animation: liveDotPulse 1.5s infinite;
+    }
+
+    @keyframes liveDotPulse {
+      0% {
+        transform: scale(0.95);
+        opacity: 0.7;
+      }
+
+      50% {
+        transform: scale(1.3);
+        opacity: 1;
+        box-shadow: 0 0 14px #00C9A7;
+      }
+
+      100% {
+        transform: scale(0.95);
+        opacity: 0.7;
+      }
+    }
+
+    .countdown-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.3px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .countdown-sub {
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.85);
+      font-weight: 500;
+    }
+
+    .countdown-target-pill {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(8px);
+      padding: 8px 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .countdown-timer-grid {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .timer-box {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.08) 100%);
+      border: 1.5px solid rgba(255, 255, 255, 0.35);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius-lg);
+      padding: 14px 18px;
+      min-width: 90px;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .timer-box:hover {
+      transform: translateY(-2px);
+      border-color: rgba(0, 201, 167, 0.7);
+      box-shadow: 0 12px 30px rgba(0, 201, 167, 0.25);
+    }
+
+    .timer-box.seconds-box {
+      border-color: rgba(0, 201, 167, 0.6);
+      animation: glowSeconds 2s infinite ease-in-out;
+    }
+
+    @keyframes glowSeconds {
+
+      0%,
+      100% {
+        border-color: rgba(0, 201, 167, 0.4);
+      }
+
+      50% {
+        border-color: rgba(0, 201, 167, 0.9);
+        box-shadow: 0 0 20px rgba(0, 201, 167, 0.4);
+      }
+    }
+
+    .timer-value {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.25), 0 0 15px rgba(0, 201, 167, 0.5);
+    }
+
+    .timer-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      color: var(--accent-mint);
+      margin-top: 6px;
+      text-transform: uppercase;
+    }
+
+    .timer-colon {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.75);
+      animation: blinkColon 1s infinite;
+      margin-top: -12px;
+    }
+
+    @keyframes blinkColon {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.2;
+      }
+    }
+
+    .countdown-footer-msg {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-md);
+      padding: 10px 16px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .countdown-footer-msg.peak-arrived {
+      background: linear-gradient(135deg, #E63946, #F4A261);
+      border-color: #ffffff;
+      font-size: 0.95rem;
+      box-shadow: 0 0 25px rgba(230, 57, 70, 0.5);
+      animation: arrivedPulse 1s infinite alternate;
+    }
+
+    @keyframes arrivedPulse {
+      0% {
+        transform: scale(1);
+      }
+
+      100% {
+        transform: scale(1.02);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .countdown-timer-grid {
+        gap: 6px;
+      }
+
+      .timer-box {
+        min-width: 65px;
+        padding: 10px 8px;
+      }
+
+      .timer-value {
+        font-size: 1.5rem;
+      }
+
+      .timer-label {
+        font-size: 0.65rem;
+      }
+
+      .timer-colon {
+        font-size: 1.3rem;
+      }
+    }
   </style>
 </head>
 
@@ -1484,8 +1739,7 @@
 
         <!-- Tombol Keluar Mode Admin (hanya tampil saat admin aktif) -->
         <div id="adminExitBtnWrapper" style="display:none; margin-bottom: 12px;">
-          <button type="button" onclick="switchUserMode('tamu')"
-            style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;
+          <button type="button" onclick="switchUserMode('tamu')" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;
               padding:10px 16px;border-radius:var(--radius-md);border:1.5px solid var(--danger-red);
               background:rgba(230,57,70,0.08);color:var(--danger-red);font-size:0.85rem;font-weight:700;
               cursor:pointer;transition:all 0.2s ease;"
@@ -1602,6 +1856,24 @@
           </div>
           <div id="apiSaveStatus" class="api-save-status"></div>
         </div>
+
+        <!-- Panel Waktu Hari Pendaftaran (Admin) — disimpan di sheet SETTINGS dibawah API_URL -->
+        <div id="waktuPuncakPanel" class="api-url-panel" style="display:none; text-align:left; margin-top:10px;">
+          <div class="api-url-panel-title">
+            <i class="fa-regular fa-clock"></i> Waktu Hari Pendaftaran (WIB)
+          </div>
+          <div style="font-size:0.65rem;color:rgba(255,255,255,0.6);margin-bottom:6px;">
+            Sheet SETTINGS → WAKTU_HARI_PENDAFTARAN (dibawah API_URL)
+          </div>
+          <div class="api-url-input-wrap">
+            <input type="text" id="inputWaktuPuncak" class="api-url-input" placeholder="2026-10-03 00:00:00"
+              autocomplete="off">
+            <button type="button" id="btnSaveWaktuPuncak" class="btn-save-api" onclick="saveWaktuPuncakHandler()">
+              <i class="fa-solid fa-floppy-disk"></i> Simpan
+            </button>
+          </div>
+          <div id="waktuPuncakSaveStatus" class="api-save-status"></div>
+        </div>
       </div>
     </aside>
 
@@ -1624,6 +1896,16 @@
       </div>
 
       <!-- Dynamic Notice Alert Banners -->
+      <div id="alertUnopenRegistration" class="alert-banner alert-warning"
+        style="display:none; background:linear-gradient(135deg, #FFF3E0, #FFE0B2); border:1.5px solid #F4A261; color:#E65100;">
+        <i class="fa-solid fa-lock alert-icon" style="color:#E65100"></i>
+        <div>
+          <strong>⚠️ Pendaftaran Belum Dibuka!</strong><br>
+          <span id="alertUnopenMsg">Pengisian formulir pendaftaran baru dapat dilakukan pada tanggal <strong>03 OKTOBER
+              2026 pukul 00.00 WIB</strong>. Silakan pantau hitungan mundur di bawah ini.</span>
+        </div>
+      </div>
+
       <div id="alertFullQuota" class="alert-banner alert-warning">
         <i class="fa-solid fa-triangle-exclamation alert-icon"></i>
         <div>
@@ -1641,6 +1923,62 @@
             mengirim pendaftaran.</span>
         </div>
       </div>
+
+      <!-- ======================================================================
+           COUNTDOWN TIMER CARD (HARI PENDAFTARAN PPDB - WIB)
+           ====================================================================== -->
+      <section id="countdownCard" class="countdown-card">
+        <div class="countdown-header">
+          <div class="countdown-title-wrap">
+            <div class="countdown-badge">
+              <span class="pulse-live-dot"></span>
+              <span>COUNTDOWN HARI PENDAFTARAN</span>
+            </div>
+            <h2 class="countdown-title">
+              <i class="fa-solid fa-hourglass-half fa-spin-pulse" style="color:var(--accent-glow)"></i> Hitungan Mundur
+              Pendaftaran INDEN PPDB
+            </h2>
+            <p class="countdown-sub">
+              <i class="fa-solid fa-clock-rotate-left"></i> Waktu Indonesia Barat (WIB - UTC+7)
+            </p>
+          </div>
+          <div class="countdown-target-pill">
+            <i class="fa-regular fa-calendar-check" style="color:var(--accent-glow)"></i>
+            <span id="countdownTargetText">Target Hari Pendaftaran: 3 Oktober 2026 00:00 WIB</span>
+          </div>
+        </div>
+
+        <div class="countdown-timer-grid">
+          <!-- DAYS -->
+          <div class="timer-box">
+            <div class="timer-value" id="cdDays">00</div>
+            <div class="timer-label">HARI</div>
+          </div>
+          <div class="timer-colon">:</div>
+          <!-- HOURS -->
+          <div class="timer-box">
+            <div class="timer-value" id="cdHours">00</div>
+            <div class="timer-label">JAM</div>
+          </div>
+          <div class="timer-colon">:</div>
+          <!-- MINUTES -->
+          <div class="timer-box">
+            <div class="timer-value" id="cdMinutes">00</div>
+            <div class="timer-label">MENIT</div>
+          </div>
+          <div class="timer-colon">:</div>
+          <!-- SECONDS -->
+          <div class="timer-box seconds-box">
+            <div class="timer-value" id="cdSeconds">00</div>
+            <div class="timer-label">DETIK</div>
+          </div>
+        </div>
+
+        <div class="countdown-footer-msg" id="countdownFooterMsg">
+          <i class="fa-solid fa-bullhorn" style="color:#F4A261"></i> jangan sampai ketinggalan! segera daftarkan
+          putra-putri anda karena kuota terbatas.
+        </div>
+      </section>
 
       <!-- FORM PPDB -->
       <form id="ppdbForm" onsubmit="handleFormSubmit(event)" novalidate>
@@ -1965,9 +2303,11 @@
     let appSettings = {
       judulWeb: "PPDB ONLINE TERPADU",
       subJudulWeb: "Sistem Penerimaan Peserta Didik Baru",
-      namaSekolah: "TK / RA AL-IKHLAS",
-      logoUrl: "https://cdn-icons-png.flaticon.com/512/2997/2997322.png",
-      waAdmin: "6281234567890"
+      namaSekolah: "MI NURUL ISLAM LABRUK KIDUL",
+      logoUrl: "https://i.ibb.co.com/B2KQmpM1/logoMI-R.png",
+      waAdmin: "6285746677738",
+      waktuHariPendaftaran: "2026-10-03 00:00:00",
+      waktuHariPuncak: "2026-10-03 00:00:00"
     };
     let kuotaData = {
       "2027/2028": { maxKuota: 112, terisi: 0, sisa: 112, isFull: false },
@@ -1983,6 +2323,7 @@
     let currentUserMode = "tamu";
     let adminVerified = false;
     let _adminPin = "";
+    let countdownTimerInterval = null;
 
     // =========================================================================
     // DOM READY
@@ -1990,6 +2331,7 @@
     document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("currentYearText").innerText = new Date().getFullYear();
       setupInputListeners();
+      initCountdownTimer();
       if (initialServerData) onAppDataLoaded(initialServerData);
       loadAppData();
     });
@@ -2094,8 +2436,17 @@
       if (statusDot) statusDot.classList.toggle("full", isFull);
       if (statusMsg) statusMsg.innerText = isFull ? `Kuota T.P. ${currentSelectedYear} Penuh!` : `Sisa Kuota: ${q.sisa} siswa lagi`;
       if (alertYearTxt) alertYearTxt.innerText = currentSelectedYear;
-      if (alertFull) alertFull.style.display = isFull ? "flex" : "none";
-      if (btnSubmit) btnSubmit.disabled = isFull;
+      if (alertFull) alertFull.style.display = (isFull && !isRegistrationUnopenedGlobal) ? "flex" : "none";
+
+      if (btnSubmit) {
+        if (isRegistrationUnopenedGlobal) {
+          btnSubmit.disabled = true;
+          btnSubmit.innerHTML = `<i class="fa-solid fa-lock"></i> <span>PENDAFTARAN BELUM DIBUKA</span>`;
+        } else {
+          btnSubmit.disabled = isFull;
+          btnSubmit.innerHTML = `<span class="pulse-ring"></span><i class="fa-solid fa-paper-plane"></i><span>KIRIM PENDAFTARAN</span>`;
+        }
+      }
     }
 
     // =========================================================================
@@ -2142,8 +2493,8 @@
         let settled = false;
         const cleanup = () => {
           settled = true;
-          try { document.head.removeChild(script); } catch(e) {}
-          try { delete window[cbName]; } catch(e) {}
+          try { document.head.removeChild(script); } catch (e) { }
+          try { delete window[cbName]; } catch (e) { }
         };
         const timer = setTimeout(() => {
           if (!settled) { cleanup(); reject(new Error("JSONP timeout")); }
@@ -2274,9 +2625,179 @@
           }
         }
         renderSavedApiUrl();
+        updateCountdownTimer();
+        renderSavedWaktuPuncak();
       }
       if (res.kuota) kuotaData = res.kuota;
       renderQuotaUI();
+    }
+
+    // =========================================================================
+    // COUNTDOWN TIMER & FORM LOCK LOGIC (WIB / UTC+7)
+    // =========================================================================
+    let isRegistrationUnopenedGlobal = false;
+
+    function initCountdownTimer() {
+      if (countdownTimerInterval) clearInterval(countdownTimerInterval);
+      updateCountdownTimer();
+      countdownTimerInterval = setInterval(updateCountdownTimer, 1000);
+    }
+
+    function updateCountdownTimer() {
+      const rawTarget = (appSettings && (appSettings.waktuHariPendaftaran || appSettings.waktuHariPuncak))
+        ? (appSettings.waktuHariPendaftaran || appSettings.waktuHariPuncak)
+        : "2026-10-03 00:00:00";
+
+      let isoStr = String(rawTarget).trim().replace(' ', 'T');
+      if (!isoStr.includes('+') && !isoStr.includes('Z') && !isoStr.includes('-')) {
+        isoStr += '+07:00'; // Standardize to Western Indonesia Time (WIB / UTC+7)
+      }
+
+      const targetMs = new Date(isoStr).getTime();
+      const nowMs = new Date().getTime(); // UTC epoch time
+      const diff = targetMs - nowMs;
+
+      // Update label target waktu WIB dengan format Indonesia
+      let formattedTarget = "03 Oktober 2026 00:00 WIB";
+      const dObj = new Date(isoStr);
+      if (!isNaN(dObj.getTime())) {
+        try {
+          const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Jakarta' };
+          formattedTarget = new Intl.DateTimeFormat('id-ID', options).format(dObj) + " WIB";
+        } catch (e) {
+          formattedTarget = `${rawTarget} WIB`;
+        }
+      }
+
+      const targetEl = document.getElementById("countdownTargetText");
+      if (targetEl) targetEl.innerText = `Target Hari Pendaftaran: ${formattedTarget}`;
+
+      const safeEl = (id, txt) => { const el = document.getElementById(id); if (el) el.innerText = txt; };
+
+      const isUnopened = !isNaN(diff) && diff > 0;
+      isRegistrationUnopenedGlobal = isUnopened;
+      toggleFormLock(isUnopened, formattedTarget);
+
+      if (isNaN(diff) || diff <= 0) {
+        safeEl("cdDays", "00");
+        safeEl("cdHours", "00");
+        safeEl("cdMinutes", "00");
+        safeEl("cdSeconds", "00");
+
+        const footerMsg = document.getElementById("countdownFooterMsg");
+        if (footerMsg) {
+          footerMsg.className = "countdown-footer-msg peak-arrived";
+          footerMsg.innerHTML = `<i class="fa-solid fa-circle-check fa-bounce"></i> 🚀 HARI PENDAFTARAN PPDB TELAH DIBUKA! SILAKAN ISI FORMULIR DI BAWAH.`;
+        }
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      const pad = n => String(n).padStart(2, '0');
+
+      safeEl("cdDays", pad(days));
+      safeEl("cdHours", pad(hours));
+      safeEl("cdMinutes", pad(minutes));
+      safeEl("cdSeconds", pad(seconds));
+
+      const footerMsg = document.getElementById("countdownFooterMsg");
+      if (footerMsg && !footerMsg.classList.contains("peak-arrived")) {
+        footerMsg.className = "countdown-footer-msg";
+        footerMsg.innerHTML = `<i class="fa-solid fa-bullhorn" style="color:#F4A261"></i> jangan sampai ketinggalan! segera daftarkan putra-putri anda karena kuota terbatas.`;
+      }
+    }
+
+    function toggleFormLock(isUnopened, formattedTarget) {
+      const alertUnopen = document.getElementById("alertUnopenRegistration");
+      const alertUnopenMsg = document.getElementById("alertUnopenMsg");
+      const form = document.getElementById("ppdbForm");
+      const btnSubmit = document.getElementById("btnSubmit");
+
+      if (alertUnopen) alertUnopen.style.display = isUnopened ? "flex" : "none";
+      if (alertUnopenMsg && formattedTarget) {
+        alertUnopenMsg.innerHTML = `Pengisian formulir pendaftaran baru dapat dilakukan pada tanggal <strong>${formattedTarget}</strong>. Silakan pantau hitungan mundur di atas.`;
+      }
+
+      if (form) {
+        const inputs = form.querySelectorAll(".form-control, input[type='radio']");
+        inputs.forEach(el => {
+          el.disabled = isUnopened;
+        });
+        form.style.opacity = isUnopened ? "0.65" : "1";
+        form.style.pointerEvents = isUnopened ? "none" : "auto";
+      }
+
+      if (btnSubmit) {
+        if (isUnopened) {
+          btnSubmit.disabled = true;
+          btnSubmit.innerHTML = `<i class="fa-solid fa-lock"></i> <span>PENDAFTARAN BELUM DIBUKA</span>`;
+        }
+      }
+    }
+
+    // =========================================================================
+    // SETTING WAKTU HARI PENDAFTARAN HANDLER (ADMIN)
+    // =========================================================================
+    function renderSavedWaktuPuncak() {
+      const inp = document.getElementById("inputWaktuPuncak");
+      const val = appSettings.waktuHariPendaftaran || appSettings.waktuHariPuncak;
+      if (inp && val) {
+        inp.value = val;
+      }
+    }
+
+    function saveWaktuPuncakHandler() {
+      const inp = document.getElementById("inputWaktuPuncak");
+      const pinEl = document.getElementById("adminPinInput");
+      const targetTime = inp ? inp.value.trim() : "";
+      const pin = pinEl ? pinEl.value.trim() : _adminPin;
+
+      if (!targetTime) { showWaktuPuncakStatus("error", "Waktu tidak boleh kosong."); return; }
+      if (!pin) { showWaktuPuncakStatus("error", "PIN admin belum dimasukkan."); return; }
+
+      const btnSave = document.getElementById("btnSaveWaktuPuncak");
+      if (btnSave) { btnSave.disabled = true; btnSave.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan...'; }
+
+      const done = (ok, msg) => {
+        if (btnSave) { btnSave.disabled = false; btnSave.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan'; }
+        showWaktuPuncakStatus(ok ? "ok" : "error", msg);
+        showToast(msg, ok ? "success" : "error");
+      };
+
+      const persist = () => {
+        appSettings.waktuHariPendaftaran = targetTime;
+        appSettings.waktuHariPuncak = targetTime;
+        updateCountdownTimer();
+      };
+
+      if (typeof google !== "undefined" && google.script && google.script.run) {
+        google.script.run
+          .withSuccessHandler(res => {
+            persist();
+            done(res.success, res.success ? "✅ Tersimpan ke sheet SETTINGS (dibawah API_URL)!" : "❌ " + res.message);
+          })
+          .withFailureHandler(() => { persist(); done(true, "💾 Disimpan sementara (server offline)."); })
+          .saveWaktuHariPendaftaran(pin, targetTime);
+      } else if (gasWebAppUrl || targetTime) {
+        gasGet({ action: "saveWaktuHariPendaftaran", pin: pin, targetTime: targetTime })
+          .then(res => { persist(); done(res.success, res.success ? "✅ Tersimpan ke sheet SETTINGS (dibawah API_URL)!" : "💾 Disimpan di browser."); })
+          .catch(() => { persist(); done(true, "💾 Disimpan di browser (offline mode)."); });
+      } else {
+        persist(); done(true, "💾 Disimpan di browser.");
+      }
+    }
+
+    function showWaktuPuncakStatus(type, msg) {
+      const el = document.getElementById("waktuPuncakSaveStatus");
+      if (!el) return;
+      el.style.display = "block";
+      el.className = "api-save-status " + (type === "ok" ? "status-ok" : "status-err");
+      el.textContent = msg;
+      if (type === "ok") setTimeout(() => el.style.display = "none", 5000);
     }
 
     // =========================================================================
@@ -2287,6 +2808,7 @@
       const btnTamu = document.getElementById("btnModeTamu");
       const btnAdmin = document.getElementById("btnModeAdmin");
       const apiPanel = document.getElementById("apiUrlPanel");
+      const wPanel = document.getElementById("waktuPuncakPanel");
       const mainForm = document.getElementById("ppdbForm");
       const adminDash = document.getElementById("adminDashboardSection");
       const adminExitBtn = document.getElementById("adminExitBtnWrapper");
@@ -2295,6 +2817,7 @@
         if (btnTamu) btnTamu.classList.add("active");
         if (btnAdmin) btnAdmin.classList.remove("active");
         if (apiPanel) apiPanel.style.display = "none";
+        if (wPanel) wPanel.style.display = "none";
         if (mainForm) mainForm.style.display = "";
         if (adminDash) adminDash.style.display = "none";
         if (adminExitBtn) adminExitBtn.style.display = "none";
@@ -2345,6 +2868,8 @@
 
     function _showAdminUI(apiPanel, mainForm, adminDash) {
       if (apiPanel) { apiPanel.style.display = "block"; renderSavedApiUrl(); }
+      const wPanel = document.getElementById("waktuPuncakPanel");
+      if (wPanel) { wPanel.style.display = "block"; renderSavedWaktuPuncak(); }
       if (adminDash) adminDash.style.display = "block";
       if (mainForm) mainForm.style.display = "";  // form tetap bisa diisi admin
       const pinEl = document.getElementById("adminPinInput");
@@ -2501,6 +3026,11 @@
     // =========================================================================
     function handleFormSubmit(e) {
       e.preventDefault();
+
+      if (isRegistrationUnopenedGlobal) {
+        showToast("Mohon maaf, pendaftaran belum dibuka! Pengisian formulir baru dapat dilakukan pada tanggal 03 OKTOBER 2026 pukul 00.00 WIB.", "warn", 6000);
+        return;
+      }
 
       const alertErr = document.getElementById("alertErrorValidation");
       if (alertErr) alertErr.style.display = "none";
