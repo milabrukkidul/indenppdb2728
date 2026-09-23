@@ -55,6 +55,16 @@ function doGet(e) {
     return makeOutput(peakResult);
   }
 
+  // Handle checkNik via GET
+  if (e && e.parameter && e.parameter.action === 'checkNik') {
+    var isRegistered = isNikRegistered(getSpreadsheet(), e.parameter.nik || "");
+    return makeOutput({
+      success: true,
+      isRegistered: isRegistered,
+      message: isRegistered ? "NIK Siswa sudah terdaftar!" : "NIK belum terdaftar"
+    });
+  }
+
   // Handle verifyPin via GET
   if (e && e.parameter && e.parameter.action === 'verifyPin') {
     var pinResult = verifyAdminPin(e.parameter.pin || "");
@@ -279,6 +289,15 @@ function processSubmission(data) {
     };
   }
 
+  // Duplicate NIK Siswa Verification
+  var nikClean = String(data.nikSiswa || "").trim().replace(/^'/, '');
+  if (isNikRegistered(ss, nikClean)) {
+    return {
+      success: false,
+      message: "NIK Siswa sudah terdaftar!"
+    };
+  }
+
   // Generate Registration Number
   var regCodeYear = tahunPelajaran.split('/')[0] || "2027";
   var regIndex = (currentCount + 1).toString();
@@ -343,6 +362,29 @@ function countRegistrationByYear(ss, tahun) {
     }
   }
   return count;
+}
+
+/**
+ * Check if a student's NIK is already registered in DATA_PENDAFTARAN
+ */
+function isNikRegistered(ss, nikSiswa) {
+  if (!nikSiswa) return false;
+  var targetNik = String(nikSiswa).trim().replace(/^'/, '');
+  if (!targetNik) return false;
+
+  var sheet = ss.getSheetByName(SHEET_DATA);
+  if (!sheet) return false;
+
+  SpreadsheetApp.flush();
+  var values = sheet.getDataRange().getValues();
+  // Col I (Index 8 in 0-based array) is NIK Siswa
+  for (var i = 1; i < values.length; i++) {
+    var rawNik = String(values[i][8] || "").trim().replace(/^'/, '');
+    if (rawNik === targetNik) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /**

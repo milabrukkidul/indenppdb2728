@@ -1944,7 +1944,7 @@
           </div>
           <div class="countdown-target-pill">
             <i class="fa-regular fa-calendar-check" style="color:var(--accent-glow)"></i>
-            <span id="countdownTargetText">Hari Pendaftaran: 3 Oktober 2026 00:00 WIB</span>
+            <span id="countdownTargetText">Target Hari Pendaftaran: 3 Oktober 2026 00:00 WIB</span>
           </div>
         </div>
 
@@ -3091,7 +3091,29 @@
 
     function onSubmissionSuccess(res) {
       showLoadingModal(false);
-      if (!res.success) { showToast("Gagal: " + (res.message || "Terjadi kesalahan."), "error", 6000); return; }
+      if (!res.success) {
+        if (res.message && res.message.toLowerCase().includes("nik")) {
+          const nikInput = document.getElementById("nikSiswa");
+          const errEl = document.getElementById("err-nikSiswa");
+          if (nikInput) {
+            nikInput.classList.add("is-invalid");
+            nikInput.focus();
+            nikInput.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+          if (errEl) {
+            errEl.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> NIK Siswa sudah terdaftar!`;
+            errEl.style.display = "flex";
+          }
+          const alertErr = document.getElementById("alertErrorValidation");
+          const errorMsg = document.getElementById("errorValidationMsg");
+          if (errorMsg) errorMsg.innerHTML = `<strong>NIK Siswa sudah terdaftar!</strong> Mohon periksa kembali NIK yang Anda masukkan.`;
+          if (alertErr) alertErr.style.display = "flex";
+          showToast("❌ NIK Siswa sudah terdaftar!", "error", 6000);
+        } else {
+          showToast("Gagal: " + (res.message || "Terjadi kesalahan."), "error", 6000);
+        }
+        return;
+      }
 
       lastSubmissionData = res;
       document.getElementById("ppdbForm").reset();

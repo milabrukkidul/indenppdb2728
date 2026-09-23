@@ -28,8 +28,9 @@ Aplikasi Penerimaan Peserta Didik Baru (PPDB) berbasis **Google Apps Script (GAS
      - NIK Ayah
      - Nama Ibu
      - NIK Ibu
-4. **Validasi Merah & Notifikasi**:
+4. **Validasi Merah & Proteksi NIK Ganda**:
    - Peringatan instan warna **Merah** (`notice Merah apabila ada yang belum diisi`) dan highlight input merah jika ada kolom wajib yang kosong.
+   - Proteksi otomatis pembacaan database untuk mencegah NIK Siswa yang sama terdaftar dua kali dengan notifikasi kesalahan: *"NIK Siswa sudah terdaftar!"*.
 5. **Sistem Penguncian Kuota Otomatis**:
    - Batas kuota maksimal default **112** (bisa di-setting di spreadsheet).
    - Pilihan Tahun Pelajaran **2027/2028** dan **2028/2029**.
@@ -37,10 +38,10 @@ Aplikasi Penerimaan Peserta Didik Baru (PPDB) berbasis **Google Apps Script (GAS
    - Tombol **"KIRIM PENDAFTARAN"** otomatis terkunci (disabled) ketika kuota penuh.
 6. **Otomatisasi Database Spreadsheet**:
    - Script `setupDatabase()` membuat dan memformat tab **`DATA_PENDAFTARAN`**, **`SETTINGS`**, dan **`KUOTA`** secara otomatis lengkap dengan formula & sampel data.
-7. **Hitungan Mundur Hari Puncak PPDB (WIB)**:
+7. **Hitungan Mundur Hari Pendaftaran PPDB (WIB)**:
    - Card **Countdown Keren** bertema *Neon Tosca Glassmorphism* dengan kotak waktu animasi (Hari, Jam, Menit, Detik).
    - Disesuaikan khusus untuk **Waktu Indonesia Barat (WIB / UTC+7)**.
-   - Pengaturan `WAKTU_HARI_PUNCAK` berada di tab **`SETTINGS`** tepat di bawah `API_URL`, serta dapat diubah langsung dari Panel Admin Web App.
+   - Pengaturan `WAKTU_HARI_PENDAFTARAN` berada di tab **`SETTINGS`** tepat di bawah `API_URL`, serta dapat diubah langsung dari Panel Admin Web App.
 8. **Bukti Pendaftaran & Integrasi WhatsApp**:
    - Menampilkan modal Bukti Pendaftaran (*Receipt Card*) dengan Nomor Pendaftaran unik (contoh: `REG-2027-001`) dan tombol konfirmasi otomatis ke WhatsApp Admin.
 
